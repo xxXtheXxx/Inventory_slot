@@ -64,7 +64,7 @@ func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int
 	var item_inventory
 	
 	if InventoryFile.is_json(ITEM_INVENTORY_PATH):
-		item_inventory = search_item(_panel_id ,_item_panel.unique_id )
+		item_inventory = search_item_in_panel(_panel_id, _item_panel.unique_id)
 	
 	var _panel_slot = InventoryFile.get_panel(_panel_id)
 	
