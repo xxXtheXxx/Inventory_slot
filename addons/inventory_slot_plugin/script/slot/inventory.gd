@@ -59,6 +59,12 @@ func _input(event: InputEvent) -> void:
 
 ## Main functions ----------------------------------------
 func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false, _metadata: Variant = null):
+    # Normalize all numeric inputs to int
+    _panel_id = int(_panel_id)
+    _item_unique_id = int(_item_unique_id)
+    _amount = int(_amount)
+    _slot = int(_slot) if _slot != -1 else -1
+    _id = int(_id) if _id != -1 else -1
 	
 	var _item_panel = InventoryFile.search_item_id(_panel_id ,_item_unique_id )
 	var item_inventory: Dictionary = null
