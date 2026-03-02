@@ -95,18 +95,17 @@ static func search_item(_inventory: Dictionary,_class_name: String,_item_name: S
 	printerr("Item ",_item_name," not found!")
 
 static func search_item_id(_panel_id: int, _item_unique_id: int = -1):
-	var _items = pull_inventory(Inventory.ITEM_PANEL_PATH)
-	
-	for _all in _items:
-		for _item in _items.get(_all):
-			
-			var item = _items.get(_all).get(_item)
-			
-			if _items.get(_all).get(_item).unique_id == _item_unique_id:
-				
-				return _items.get(_all).get(_item)
-	
-	printerr("Item ",_item_unique_id," not found!")
+    var _items = pull_inventory(Inventory.ITEM_PANEL_PATH)
+    
+    for _all in _items:
+        for _item in _items.get(_all):
+            var item = _items.get(_all).get(_item)
+            # Type-safe comparison
+            if int(item.unique_id) == int(_item_unique_id):
+                return item
+    
+    printerr("Item ", _item_unique_id, " not found!")
+    return null  # ✅ Explicit null return
 
 static func search_class_name(_class_name: String):
 	var _all_class: Dictionary = InventoryFile.pull_inventory(Inventory.ITEM_PANEL_PATH)
