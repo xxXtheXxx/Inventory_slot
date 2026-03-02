@@ -61,10 +61,14 @@ func _input(event: InputEvent) -> void:
 func add_item(_panel_id: int, _item_unique_id: int, _amount: int = 1, _slot: int = -1, _id: int = -1, _unique: bool = false, _metadata: Variant = null):
 	
 	var _item_panel = InventoryFile.search_item_id(_panel_id ,_item_unique_id )
-	var item_inventory
-	
+	var item_inventory: Dictionary = null
+
 	if InventoryFile.is_json(ITEM_INVENTORY_PATH):
-		item_inventory = search_item(_panel_id ,_item_panel.unique_id )
+    	var all_items = InventoryFile.list_all_item_inventory(_panel_id)
+    	for inv_item in all_items:
+        	if int(inv_item.unique_id) == int(_item_unique_id) and int(inv_item.amount) < int(_item_panel.max_amount):
+        		item_inventory = inv_item
+        		break
 	
 	var _panel_slot = InventoryFile.get_panel(_panel_id)
 	
