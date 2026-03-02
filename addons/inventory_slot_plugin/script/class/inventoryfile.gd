@@ -221,20 +221,23 @@ static func push_inventory(_dic: Dictionary,_path: String) -> void:
 	file.close()
 
 static func push_item_inventory(_item_id: int, _item_inventory: Dictionary) -> bool:
-	var _all_items = pull_inventory(Inventory.ITEM_INVENTORY_PATH)
-	
-	if _item_inventory == {}:
-		_all_items.erase(str(_item_id))
-		push_inventory(_all_items, Inventory.ITEM_INVENTORY_PATH)
-		
-		return true
-	else:
-		_all_items[str(_item_id)] = _item_inventory
-		push_inventory(_all_items, Inventory.ITEM_INVENTORY_PATH)
-		
-		return true
-	
-	return false
+    var _all_items = pull_inventory(Inventory.ITEM_INVENTORY_PATH)
+    var key = str(int(_item_id))  # Always use string key
+    
+    if _item_inventory == {} or _item_inventory.is_empty():
+        _all_items.erase(key)
+    else:
+        # Normalize stored values to int
+        if _item_inventory.has("panel_id"): _item_inventory.panel_id = int(_item_inventory.panel_id)
+        if _item_inventory.has("slot"): _item_inventory.slot = int(_item_inventory.slot)
+        if _item_inventory.has("amount"): _item_inventory.amount = int(_item_inventory.amount)
+        if _item_inventory.has("unique_id"): _item_inventory.unique_id = int(_item_inventory.unique_id)
+        if _item_inventory.has("id"): _item_inventory.id = int(_item_inventory.id)
+        
+        _all_items[key] = _item_inventory
+    
+    push_inventory(_all_items, Inventory.ITEM_INVENTORY_PATH)
+    return true
 
 static func remove_all_item_inventory() -> void:
 	for panel in InventoryFile.list_all_panel():
