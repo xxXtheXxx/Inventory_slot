@@ -252,19 +252,21 @@ func get_metadata(_item_unique_id: int) -> Dictionary:
 #---------------------------------------------------------
 
 ## Searchs -----------------------------------------------
-func search_item(_item_unique_id: int = -1, _slot: int = -1):
-	var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
-	
-	if _slot != -1:
-		for _item: String in _all_items:
-			if _all_items.get(_item).slot == _slot:
-				return _all_items.get(_item)
-	
-	for _item: String in _all_items:
-		if _all_items.get(_item).unique_id == _item_unique_id:
-			return _all_items.get(_item)
-	
-	return null
+func search_item(_item_unique_id: int = -1, _slot: int = -1) -> Dictionary:
+    var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
+    
+    if _slot != -1:
+        for _item: String in _all_items:
+            var item_data: Dictionary = _all_items.get(_item, {})
+            if not item_data.is_empty() and item_data.has("slot") and item_data.slot == _slot:
+                return item_data
+    
+    for _item: String in _all_items:
+        var item_data: Dictionary = _all_items.get(_item, {})
+        if not item_data.is_empty() and item_data.has("unique_id") and item_data.unique_id == _item_unique_id:
+            return item_data
+    
+    return {}
 
 func search_item_in_panel(_panel_id: int, _item_unique_id: int = -1, _slot: int = -1):
 	var _all_items: Dictionary = InventoryFile.pull_inventory(ITEM_INVENTORY_PATH)
