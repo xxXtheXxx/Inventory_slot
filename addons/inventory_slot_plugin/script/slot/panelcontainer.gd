@@ -184,13 +184,13 @@ func update_tittle() -> void:
 	update_tittle_name()
 
 func update_tittle_name() -> void:
-	var _all_panel = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
-	
-	for _panel_slot in _all_panel:
-		var _panel = _all_panel.get(_panel_slot)
-		
-		if _panel.id == slot_panel_id:
-			name_label.text = _panel_slot
+    var _all_panel = InventoryFile.pull_inventory(Inventory.PANEL_SLOT_PATH)
+    
+    for _panel_slot in _all_panel:
+        var _panel: Dictionary = _all_panel.get(_panel_slot, {})
+        if not _panel.is_empty() and _panel.has("id") and _panel.id == slot_panel_id:
+            name_label.text = _panel_slot
+            break
 
 func update_tittle_alignment() -> void:
 	match tittle_alignment:
