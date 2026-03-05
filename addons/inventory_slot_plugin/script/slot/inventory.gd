@@ -187,7 +187,7 @@ func set_panel_item(_item_id: int, _out_panel_id: int, _new_panel_id:int, _slot:
 		
 		return ERROR.NO_SPACE_FOR_ITEM_IN_SLOTS
 	
-	if _out_panel == null or new_data == null: return
+	if _out_panel == null or _new_panel == null: return
 	
 	var _result = add_item(
 		_new_panel.id,
