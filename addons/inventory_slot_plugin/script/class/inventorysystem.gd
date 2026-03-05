@@ -38,13 +38,24 @@ static func push_system_file(_path_mode: int,_path: String,_extension: StringNam
 	_create_file_system(_path_mode,_path,_extension)
 
 
-static func _create_json_path(_path: String,_extension: StringName, _create_files: bool = true) -> void:
-	if _extension == "":
-		_extension = "json"
-	
-	if !DirAccess.dir_exists_absolute(_path):
-		printerr("This folder doesn't exist, it's impossible to create a directory!")
-		return
+static func _create_json_path(_path: String, _extension: StringName, _create_files: bool = true) -> void:
+    if _extension.is_empty():
+        _extension = "json"
+    
+    if !DirAccess.dir_exists_absolute(_path):
+        printerr("This folder doesn't exist, it's impossible to create a directory!")
+        return
+    
+    var dir = DirAccess.open(_path)
+    if dir == null:
+        printerr("Failed to open directory: ", _path)
+        return
+    
+    var _save_path: String = str(_path, "/save")
+    dir.make_dir(_save_path)
+    
+    if !_create_files:
+        return
 	
 	var _json_path: String = _path
 	var _save_path: String = str(_json_path,"/save")
