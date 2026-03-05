@@ -123,14 +123,14 @@ static func get_panel_id(_unique_id: int) -> int:
 	return -1
 
 static func get_panel(_panel_id: int) -> Dictionary:
-	var _panel = pull_inventory(Inventory.PANEL_SLOT_PATH)
-	
-	for _all in _panel:
-		
-		if _panel.get(_all).id == _panel_id:
-			return _panel.get(_all)
-	
-	return {}
+    var _panel = pull_inventory(Inventory.PANEL_SLOT_PATH)
+    
+    for _all in _panel:
+        var panel_data: Dictionary = _panel.get(_all, {})
+        if not panel_data.is_empty() and panel_data.has("id") and panel_data.id == _panel_id:
+            return panel_data
+    
+    return {}
 
 static func get_panel_with_unique_id(_unique_id: int) -> Dictionary:
 	var all_items = pull_inventory(Inventory.ITEM_INVENTORY_PATH)
