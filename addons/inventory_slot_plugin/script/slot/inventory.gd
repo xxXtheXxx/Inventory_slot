@@ -428,15 +428,15 @@ func _separate_item_one(_item_panel: Dictionary, _panel_slot: Dictionary, _amoun
 	
 	return false
 
-func _error(_panel_slot,_item_panel) -> bool:
-	if _panel_slot.size() == 0:
-		printerr("invalid panel_id! ")
-		return false
-	if _item_panel == null:
-		printerr("invalid item_unique_id! ")
-		return false
-	
-	return true
+func _error(_panel_slot: Dictionary, _item_panel: Dictionary) -> bool:
+    if _panel_slot == null or _panel_slot.is_empty():
+        printerr("invalid panel_id! ")
+        return false
+    if _item_panel == null:
+        printerr("invalid item_unique_id! ")
+        return false
+    
+    return true
 
 func _filter_add_full_item(_item_panel: Dictionary ,_item_inventory: Dictionary ,_panel_slot: Dictionary ,_amount: int ,_metadata: Variant ):
 	
