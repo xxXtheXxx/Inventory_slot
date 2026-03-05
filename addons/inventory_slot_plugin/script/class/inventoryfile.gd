@@ -80,18 +80,20 @@ static func list_all_item_panel(_class_name: StringName = "") -> Array:
 	
 	return _all_items
 
-static func search_item(_inventory: Dictionary,_class_name: String,_item_name: String):
-	for _class in _inventory:
-		
-		if _class_name == _class:
-			
-			for _item in _inventory.get(_class):
-				
-				if _item_name == _item:
-					
-					return _inventory.get(_class_name).get(_item_name)
-	
-	printerr("Item ",_item_name," not found!")
+static func search_item(_inventory: Dictionary, _class_name: String, _item_name: String) -> Dictionary:
+    for _class in _inventory:
+        
+        if _class_name == _class:
+            var class_data: Dictionary = _inventory.get(_class, {})
+            for _item in class_data:
+                
+                if _item_name == _item:
+                    var item_data: Dictionary = class_data.get(_item, {})
+                    if not item_data.is_empty():
+                        return item_data
+    
+    printerr("Item ", _item_name, " not found!")
+    return {}
 
 static func search_item_id(_panel_id: int, _item_unique_id: int = -1):
     var _items = pull_inventory(Inventory.ITEM_PANEL_PATH)
