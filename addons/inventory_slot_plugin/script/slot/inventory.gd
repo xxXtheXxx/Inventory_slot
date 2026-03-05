@@ -381,28 +381,21 @@ func _append_item(_panel_slot: Dictionary, _item_panel: Dictionary, _amount: int
 	
 	return _all_items_inventory
 
-func _separater_item_amount(amount: int, max_amount: int, filter_amount: int):
-	var amount_slots = float(amount) / max_amount
-	var separate_amount = []
-	var next: int = 0
-	var max: int = 0
-	
-	# se tiver muito item
-	for i in filter_amount: # Separa quantos slots são necessarios e a quantidade que irar ir pra cada slot
-		
-		next += 1
-		max += 1
-		
-		if next == max_amount:
-			separate_amount.append(next)
-			
-			next = 0
-		
-		
-		if max == filter_amount:
-			separate_amount.append(next)
-	
-	return separate_amount
+func _separater_item_amount(amount: int, max_amount: int, filter_amount: int) -> Array:
+    var separate_amount: Array = []
+    var next: int = 0
+    
+    for i in range(filter_amount):
+        next += 1
+        
+        if next == max_amount:
+            separate_amount.append(next)
+            next = 0
+    
+    if next > 0:
+        separate_amount.append(next)
+    
+    return separate_amount
 
 func _separate_item_one(_item_panel: Dictionary, _panel_slot: Dictionary, _amount: int, _metadata: Variant):
 	
