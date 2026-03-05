@@ -3,26 +3,25 @@ class_name InventoryFile extends Node
 ## File Learns ===================================================================
 
 static func is_json(_path: String) -> bool:
-	if !FileAccess.file_exists(_path):
-		return false
-	else:
-		var file = FileAccess.open(_path ,FileAccess.READ)
-		
-		if file.get_as_text() == null:
-			return false
-		if file.get_as_text() == "":
-			return false
-		
-		var json = JSON.parse_string(file.get_as_text())
-		
-		if json is Dictionary == false:
-			return false
-		
-		if json.size() >= 1 and json != {}:
-			
-			return true
-	
-	return false
+    if !FileAccess.file_exists(_path):
+        return false
+    
+    var file = FileAccess.open(_path, FileAccess.READ)
+    if file == null:
+        return false
+    
+    var content: String = file.get_as_text()
+    file.close()
+    
+    if content.is_empty():
+        return false
+    
+    var json = JSON.parse_string(content)
+    
+    if json is Dictionary and not json.is_empty():
+        return true
+    
+    return false
 
 static func pull_inventory(_path: String) -> Dictionary:
 	if is_json(_path):
