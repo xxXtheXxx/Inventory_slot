@@ -3,7 +3,7 @@ extends Node
 
 signal new_item(_item_panel: Dictionary , _item_inventory: Dictionary, _panel_slot: Dictionary)
 signal new_data(_item_panel: Dictionary , _item_inventory: Dictionary ,_system_slot: Dictionary)
-signal discart_item(_item_panel: Dictionary ,_item_inventory: Dictionary  ,_system_slot: Dictionary)
+signal discard_item(_item_panel: Dictionary, _item_inventory: Dictionary, _system_slot: Dictionary)
 signal item_leftlover(_item_panel: Dictionary ,_item_inventory: Dictionary ,amount: int)
 signal item_entered_panel(_item: Dictionary ,_new_id: int)
 signal item_exiting_panel(_item: Dictionary ,_out_id: int)
